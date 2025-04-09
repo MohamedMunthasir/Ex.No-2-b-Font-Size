@@ -50,42 +50,58 @@ RegisterNumber:  212222220010
 
 ```
 
-package com.firstapp.fontsize;
+package com.example.fontcolorchangerapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-import android.app.Activity;
-import android.graphics.Typeface;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 public class MainActivity extends AppCompatActivity {
-    float font = 24;
-    int i = 1;
+
+    TextView sampleText;
+    Button changeColorButton, changeFontButton;
+    int colorIndex = 0;
+    int[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.MAGENTA};
+
+    boolean isCustomFont = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView t1 = (TextView)findViewById(R.id.textView1);
-        Button b1 = (Button)findViewById(R.id.button1);
-        b1.setOnClickListener(new View.OnClickListener()    {
+
+        sampleText = findViewById(R.id.sampleText);
+        changeColorButton = findViewById(R.id.changeColorButton);
+        changeFontButton = findViewById(R.id.changeFontButton);
+
+        changeColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                t1.setTextSize(font);
-                font = font+4;
-                if(font==40)
-                    font = 20;
+                sampleText.setTextColor(colors[colorIndex]);
+                colorIndex = (colorIndex + 1) % colors.length;
             }
         });
 
-
+        changeFontButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isCustomFont) {
+                    sampleText.setTypeface(Typeface.DEFAULT);
+                } else {
+                    Typeface customTypeface = ResourcesCompat.getFont(MainActivity.this, R.font.oswald);
+                    sampleText.setTypeface(customTypeface);
+                }
+                isCustomFont = !isCustomFont;
+            }
+        });
     }
 }
+
 ```
 
 
@@ -94,42 +110,46 @@ public class MainActivity extends AppCompatActivity {
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="#FFFFFF">
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
+        android:id="@+id/sampleText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="70dp"
-        android:gravity="left"
-        android:text="HELLO WORLD"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="376dp" />
+        android:text="Hello Android!"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:layout_marginBottom="30dp" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
+        android:id="@+id/changeColorButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20sp"
-        android:gravity="center"
-        android:text="Change Font Size"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="456dp" />
-    </RelativeLayout>
+        android:text="Change Color" />
+
+    <Button
+        android:id="@+id/changeFontButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Font"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
+
 ```
 ## Output:
 
-![image](https://user-images.githubusercontent.com/94154683/235359384-0b6a5b37-7380-4e0f-a474-9421f2a0288a.png)
 
-![image](https://user-images.githubusercontent.com/94154683/235359926-503ecbef-3056-4b09-8908-59434b7d6663.png)
+![image](https://github.com/user-attachments/assets/fda448cd-d80e-446f-a643-4f1575d3d378)
+
+![image](https://github.com/user-attachments/assets/08d1174c-70ca-47ef-bfa1-738ab19bd501)
+
 
 
 ## Result:
