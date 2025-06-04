@@ -5,7 +5,7 @@
 ## AIM:
 To develop an application that uses Font Size using android studio.
 
-## EQUIPMENTS REQUIRED:
+## EQUIPMENTS REQUIRED: 
 
 Android Studio(Min. required Artic Fox)
 
